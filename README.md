@@ -1,5 +1,5 @@
 # 文档集合
-## [JavaScript]()
+## [JavaScript](https://github.com/ArcherGrey/study/tree/master/JavaScript)
 # 需要学习的知识点
 
 ## c++
