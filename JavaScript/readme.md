@@ -24,4 +24,4 @@
 
 
 ## 常用软件安装和使用
-[sublime]()
+[sublime 安装](https://github.com/ArcherGrey/study/blob/master/JavaScript/sublime/%E5%AE%89%E8%A3%85.md)
