@@ -21,3 +21,7 @@
 - Node.js实战
 - HTML5 Canvas核心技术
 - Pro Git
+
+
+## 常用软件安装和使用
+[sublime]()
