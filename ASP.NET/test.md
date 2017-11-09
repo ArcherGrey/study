@@ -5,6 +5,6 @@
 	
 </head>
 <body>
-	<h1 font="bold">asd</h1>
+	<h1 style="color:red">asd</h1>
 </body>
 </html>
