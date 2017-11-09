@@ -72,8 +72,8 @@
 
 ## 创建项目
 （这里使用的是vs2015）
-1.打开 vs 新建项目
-2.选择 `C#` 下面的 `web` 中的 `asp.net web application` 名字改为 `MvcGuestBook`
-3.模板选择 `MVC`
+1. 打开 vs 新建项目
+2. 选择 `C#` 下面的 `web` 中的 `asp.net web application` 名字改为 `MvcGuestBook`
+3. 模板选择 `MVC`
 
 
