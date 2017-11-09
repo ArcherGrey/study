@@ -89,7 +89,7 @@
 - `FilterConfig.cs` 全局 `Action Filter` 定义的地方
 - `RouteConfig.cs` 定义网址路由
 
-> `Content` 目录
+> `Content` 目录：
 存储网站所有静态属性，例如：图片、CSS、下载文件等等
 
 
