@@ -83,8 +83,14 @@
 在第一次运行注册登录页面后，在 `App_Data` 目录下会自动创建一组默认数据库文档（mdf ldf 文件）命名规则是 `aspnet-项目名称-日期` （需要点击显示所有文件才能看到）
 
 默认项目模板创建的文档和目录：
+
+> `App_Start` 目录
 - `BundleConfig.cs` 定义 `css/js` 打包规则
-- ``
+- `FilterConfig.cs` 全局 `Action Filter` 定义的地方
+- `RouteConfig.cs` 定义网址路由
+
+> `Content` 目录
+存储网站所有静态属性，例如：图片、CSS、下载文件等等
 
 
 
