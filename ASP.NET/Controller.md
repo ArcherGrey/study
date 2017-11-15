@@ -22,3 +22,16 @@ namespace MvcApplication3.Controllers{
 - `Controller` 的名称必须以 `Controller` 结尾
 - 所有 `Controller` 都必须继承自 `MVC` 内建的 `Controller` 
 - 所有的 `Action` 都应该为 `Public` 
+
+
+## 运行过程
+
+`MvcHandler` 选中某一个 `Controller` 之后，再通过 `ActionInvoker` 来选定适合的 `Action` 来运行。
+
+每个 `Action` 可以定义 0 到多个参数，`ActionInvoker` 会根据 `RouteValue` 和客户端传来的数据来调用 `Action` 方法。
+
+参数传入的属性都是通过**模型绑定**机制，从 `RequestContext` 取得数据，然后将数据传入方法的参数中。
+
+`Action` 运行完成后的回传值通常是 `ActionResult` 类别。`ActionResult`是一个抽象类。
+
+`MvcHandler` 得到 `ActionResult` 后运行 `ExecuteResult` 方法，将结果响应到客户端，到这里 `Controller` 任务完成。
