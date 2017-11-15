@@ -35,3 +35,4 @@ namespace MvcApplication3.Controllers{
 4. `Action` 运行完成后的回传值通常是 `ActionResult` 类别。`ActionResult`是一个抽象类。
 
 5. `MvcHandler` 得到 `ActionResult` 后运行 `ExecuteResult` 方法，将结果响应到客户端，到这里 `Controller` 任务完成。
+
