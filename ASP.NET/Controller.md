@@ -6,7 +6,7 @@
 
 ```
 using System.Web.Mvc;
-namespace MvcApplication3.Controllers{
+namespace MvcApplication3.Controllers{ 
   public class HomeController:Controller{
     public ActionResult Index(){
       ViewBag.Message = "修改此模板以快速启动你的 ASP.NET MVC 应用程序";
@@ -15,3 +15,10 @@ namespace MvcApplication3.Controllers{
   }
 }
 ```
+整个 `Controller` 就是一个命名空间，前面的 `MvcApplication3` 就是 `MVC3` ，每一个具体的 `Controller` 都是一个类，其中会有很多方法，只要是 `Public` 方法就是一个 `Action` ，通过 `Action` 就可以接收客户端传来的要求，响应对应的 `View` 。
+
+`Controller` 的基本要求：
+- `Controller` 必须为 `Public` 类型
+- `Controller` 的名称必须以 `Controller` 结尾
+- 所有 `Controller` 都必须继承自 `MVC` 内建的 `Controller` 
+- 所有的 `Action` 都应该为 `Public` 
