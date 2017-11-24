@@ -21,3 +21,7 @@ assert.ok(0);
 assert.ok(false, 'it\'s false');
 // throws "AssertionError: it's false"
 ```
+其中 `value` 为需要判断的表达式或者值，如果 `value` 的 结果为假则会抛出一个异常并显示 `message` 中的信息（`message` 选填）
+
+## `assert.deepEqual(actual, expected[, message])`
+
