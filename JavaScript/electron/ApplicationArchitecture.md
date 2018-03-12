@@ -21,14 +21,14 @@
 `electron` 提供了一系列 `API` 支持主进程和渲染进程来开发桌面应用。
 
 
-通过引用 `electron` 模块来使用
+通过引用 `electron` 模块来使用:
 ```
 const electron = require('electron')
 ```
 
 其中，大多数接口都是通过主进程来调用，少部分只能通过渲染进程调用，其他的都可以。
 
-`electron` 中的窗口通过创建 `BrowserWindow` 实例来使用，它只在主进程中可用。
+`electron` 中的窗口通过创建 `BrowserWindow` 实例来使用，它只在主进程中可用:
 ```
 // This will work in the main process, but be `undefined` in a
   // renderer process:
