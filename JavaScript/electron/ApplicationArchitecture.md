@@ -36,3 +36,19 @@ const electron = require('electron')
   
   const win = new BrowserWindow()
 ```
+
+自从进程之间可以通讯，一个渲染进程可以调用主进程来执行任务。在 `electron` 里面通过 `remote` 模块来操作：
+```
+// This will work in a renderer process, but be `undefined` in the
+  // main process:
+  const { remote } = require('electron')
+  const { BrowserWindow } = remote
+  
+  const win = new BrowserWindow()
+```
+
+## 使用 `node.js` API
+
+`electron` 的主进程和渲染进程对 `node.js` 完全开放访问，这样做有两个重要的意义：
+- node.js 中的 api 在 electron 中可用
+- 可以在应用中使用需要的node模块
