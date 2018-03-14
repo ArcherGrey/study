@@ -50,4 +50,12 @@ alert("load");
 </html>
 ```
 - 动态脚本节点（dynamic script node）：DOM允许你是用javascript动态创建几乎全部文档内容，`<script>` 和其他页面元素没有什么不同，所以可以使用DOM来动态加载javascript文件，这样加载代码使得代码的下载和运行都不会阻塞其他页面处理过程，而且还可以把动态加载的脚本放在页面的任何位置而不会对其余部分的页面代码造成影响。这种方法就能在页面中动态加载很多javascript文件，是非阻塞下载中最常用的模式，因为它可以跨浏览器同时简单易用。
+
+例子：
+```
+var script = document.createElement ("script");
+script.type = "text/javascript";
+script.src = "file1.js";
+document.getElementsByTagName_r("head")[0].appendChild(script);
+```
 - XHR 脚本注入：这种方法首先创建一个XHR对象然后下载javascript文件，接着使用上面动态脚本加载的方法将代码注入页面。
