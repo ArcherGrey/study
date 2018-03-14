@@ -27,4 +27,26 @@
 
 主要有下面几种方式实现：
 - 延期脚本：html4 为 `<script>` 标签定义了一个扩展属性 `defer`。这个属性指明所包含的脚本不会修改DOM，因此代码可以稍后执行。这个方法需要 `Internet Explorer 4` 和 `Firefox 3.5` 更高版本的浏览器支持，如果浏览器支持的话，是一种可行的解决方案。带有扩展属性 `defer`的标签可以放在文档的任何位置。（经测试chrome不支持）
-- 
+例子：
+```
+<html>
+<head>
+<title>Script Defer Example</title>
+</head>
+<body>
+<script defer>
+alert("defer");
+</script>
+<script>
+alert("script");
+</script>
+<script>
+window.onload = function(){
+alert("load");
+};
+</script>
+</body>
+</html>
+```
+- 动态脚本节点（dynamic script node）：DOM允许你是用javascript动态创建几乎全部文档内容，`<script>` 和其他页面元素没有什么不同，所以可以使用DOM来动态加载javascript文件，这样加载代码使得代码的下载和运行都不会阻塞其他页面处理过程，而且还可以把动态加载的脚本放在页面的任何位置而不会对其余部分的页面代码造成影响。这种方法就能在页面中动态加载很多javascript文件，是非阻塞下载中最常用的模式，因为它可以跨浏览器同时简单易用。
+- XHR 脚本注入：这种方法首先创建一个XHR对象然后下载javascript文件，接着使用上面动态脚本加载的方法将代码注入页面。
