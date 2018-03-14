@@ -81,3 +81,5 @@ document.body.appendChild(script);
 xhr.send(null);
 ```
 此代码向服务器发送一个获取file1.js 文件的GET 请求。onreadystatechange 事件处理函数检查readyState是不是4，然后检查HTTP 状态码是不是有效（2XX 表示有效的回应，304 表示一个缓存响应）。如果收到了一个有效的响应，那么就创建一个新的<script>元素，将它的文本属性设置为从服务器接收到的responseText 字符串。这样做实际上会创建一个带有内联代码的<script>元素。一旦新<script>元素被添加到文档，代码将被执行，并准备使用。
+  
+这种方法的主要优点是，你可以下载javascript代码而不立即执行。由于代码返回在标签之外，所以下载后不会自动执行，可以人为控制执行时机
