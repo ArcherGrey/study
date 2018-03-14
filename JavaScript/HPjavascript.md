@@ -63,3 +63,21 @@ document.getElementsByTagName_r("head")[0].appendChild(script);
 <hr>
 
 - XHR 脚本注入：这种方法首先创建一个XHR对象然后下载javascript文件，接着使用上面动态脚本加载的方法将代码注入页面。
+
+例子：
+```
+var xhr = new XMLHttpRequest();
+xhr.open("get", "file1.js", true);
+xhr.onreadystatechange = function(){
+if (xhr.readyState == 4){
+if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304){
+var script = document.createElement ("script");
+script.type = "text/javascript";
+script.text = xhr.responseText;
+document.body.appendChild(script);
+}
+}
+};
+xhr.send(null);
+```
+此代码向服务器发送一个获取file1.js 文件的GET 请求。onreadystatechange 事件处理函数检查readyState是不是4，然后检查HTTP 状态码是不是有效（2XX 表示有效的回应，304 表示一个缓存响应）。如果收到了一个有效的响应，那么就创建一个新的<script>元素，将它的文本属性设置为从服务器接收到的responseText 字符串。这样做实际上会创建一个带有内联代码的<script>元素。一旦新<script>元素被添加到文档，代码将被执行，并准备使用。
