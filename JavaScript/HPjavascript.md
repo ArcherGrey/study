@@ -91,3 +91,13 @@ xhr.send(null);
 推荐的向页面加载大量javascript的方法有两个步骤：
 1. 包含动态加载javascript所需的代码
 2. 然后加载页面初始化所需的除了javascript之外的部分
+
+这部分代码尽量小，可能只包含loadscript()函数，它的下载和运行非常迅速，不会对页面造成很大的干扰。当初始代码准备好之后，用它来加载其余的javascript。例子：
+```
+<script type="text/javascript" src="loader.js"></script>
+<script type="text/javascript">
+loadScript("the-rest.js", function(){
+Application.init();
+});
+</script>
+```
