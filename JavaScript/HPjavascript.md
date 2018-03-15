@@ -101,3 +101,45 @@ Application.init();
 });
 </script>
 ```
+将此段代码放在 `</body>` 之前。这样做有几点好处：
+1. javascript的运行不会影响页面的其他部分显示
+2. 当javascript文件完成下载所有的DOM都已经创建完成，并且做好被访问的准备，避免再使用额外的事件处理（例如 window.onload）来得知页面是否已经准备好了
+
+另一个选择是直接将 loadScript() 函数嵌入在页面中，这样可以避免另一次http请求。例如：
+```
+<script type="text/javascript">
+function loadScript(url, callback){
+var script = document.createElement ("script")
+script.type = "text/javascript";
+if (script.readyState){ //IE
+script.onreadystatechange = function(){
+if (script.readyState == "loaded" ||
+script.readyState == "complete"){
+script.onreadystatechange = null;
+callback();
+}
+};
+} else { //Others
+script.onload = function(){
+callback();
+};
+}
+script.src = url;
+document.getElementsByTagName_r("head")[0].appendChild(script);
+}
+loadScript("the-rest.js", function(){
+Application.init();
+});
+</script>
+```
+
+一旦页面初始化下载完成，还可以使用loadscript()函数来加载页面所需的额外功能函数。
+
+## 总结
+
+javascript代码的执行和下载会阻塞浏览器的进程，减少javascript对性能的影响主要方法：
+- 将所有 <script> 标签放置在页面的底部，body的底部，保证页面加载完成之前不会受到javascript脚本执行或下载的影响
+- 将脚本打包，减少脚本数量，脚本越少加载越快，页面的响应越迅速，无论是内联还是外部脚本都是如此
+- 使用非阻塞方式下载javascript：1.添加defer属性（对浏览器版本有要求）2.动态创建脚本 3.使用xhr对象下载脚本，并注入到页面中
+
+对于大量使用javascript代码的网页上述方法可以极大提供网页应用的实际性能。
