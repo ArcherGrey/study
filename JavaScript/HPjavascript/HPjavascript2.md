@@ -41,4 +41,22 @@ return sum;
 - catch 子句 最好不要在子句内访问局部变量
 
 ## 动态作用域
-41
+无论是 with 还是 catch 子句还有包含 `()` 的函数，都被认为是动态作用域。一个动态作用域只因代码运行而存在，因此无法通过静态分析（代码结构）来确定是否存在动态作用域。
+
+例子：
+```
+function execute(code) {
+(code);
+function subroutine(){
+return window;
+}
+var w = subroutine();
+//what value is w?
+};
+```
+
+大多数情况下，w将等价于全局window对象，不过在 `execute("var window={};")` 的情况下，会在函数中创建一个局部的window变量，所以不允许这段代码是没有办法预先确定标识符的确切含义的。
+
+所以在绝对必要的时候才推荐使用动态作用域。
+
+## 闭包、作用域、内存
