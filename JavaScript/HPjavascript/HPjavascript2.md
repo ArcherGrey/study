@@ -81,4 +81,24 @@ javascript中的对象是基于原形的，原形是其他对象的基础，定�
 - 实例成员：存在于实例本身
 - 原形成员：从对象原形继承
 
+### 原形链
+对象的原形决定了一个实例的类型，默认情况下，所有对象都是object的实例，并继承了所有基本方法。
 
+例子：
+```
+function Book(title, publisher){
+this.title = title;
+this.publisher = publisher;
+}
+Book.prototype.sayTitle = function(){
+alert(this.title);
+};
+var book1 = new Book("High Performance JavaScript", "Yahoo! Press");
+var book2 = new Book("JavaScript: The Good Parts", "Yahoo! Press");
+alert(book1 instanceof Book); //true
+alert(book1 instanceof Object); //true
+book1.sayTitle(); //"High Performance JavaScript"
+alert(book1.toString()); //"[object Object]"
+```
+
+Book 构造器用于创建一个新的实例， `book1.__proto__` 是 `Book.prototype`
