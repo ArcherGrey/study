@@ -52,4 +52,8 @@ document.body.appendChild(document.createElement('div'))
 
 ## 重绘和重排版
 
-85
+当浏览器下载完成所有页面html标记、javascript、css、图片之后，会解析文件并且创建两个内部数据结构：
+- DOM 树：表示页面结构
+- 渲染树：表示DOM节点如何显示
+
+
