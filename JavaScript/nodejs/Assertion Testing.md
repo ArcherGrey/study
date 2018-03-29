@@ -71,6 +71,8 @@ assert.deepEqual(obj1, obj4);
 ```
 如果不相等，`message` 和上面的一样
 
+---
+
 ## `assert.deepStrictEqual(actual, expected[, message])`
 
 严格相等：
@@ -109,4 +111,34 @@ assert.deepStrictEqual(new String('foo'), Object('foo'));
 // OK because the object and the string are identical when unwrapped.
 ```
 
-## assert.doesNotThrow(block[, error][, message])
+---
+
+## `assert.doesNotThrow(block[, error][, message])`
+
+当 `assert.doesNotThrow()` 被调用的时候，`block` 会立即调用。
+如果抛出一个错误，并且它与 `error` 参数指定的类型相同，则抛出 `AssertionError`。 如果错误类型不同，或者错误参数未定义，则错误将传播回调用方。
+
+```
+assert.doesNotThrow(
+  () => {
+    throw new TypeError('Wrong value');
+  },
+  SyntaxError
+);
+```
+会抛出 `typeError` 因为 `SyntaxError` 没有匹配
+
+---
+
+## `assert.equal(actual, expected[, message])`
+
+和 `deepEqual` 的唯一区别在于，对于对象比较不相等：
+```
+assert.equal({ a: { b: 1 } }, { a: { b: 1 } });
+//AssertionError: { a: { b: 1 } } == { a: { b: 1 } }
+```
+相等于对于每种类型的参数都做 `==` 操作
+
+---
+
+## `assert.fail(message) | assert.fail(actual, expected[, message[, operator[, stackStartFunction]]])`
