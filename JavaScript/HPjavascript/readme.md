@@ -6,3 +6,4 @@
 - [字符串和正则表达式](https://github.com/ArcherGrey/study/blob/master/JavaScript/HPjavascript/HPjavascript5.md)
 - [响应接口](https://github.com/ArcherGrey/study/blob/master/JavaScript/HPjavascript/HPjavascript6.md)
 - [ajax和xml](https://github.com/ArcherGrey/study/blob/master/JavaScript/HPjavascript/HPjavascript7.md)
+- [编程实践](https://github.com/ArcherGrey/study/blob/master/JavaScript/HPjavascript/HPjavascript8.md)
