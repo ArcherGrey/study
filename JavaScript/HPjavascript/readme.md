@@ -7,3 +7,4 @@
 - [响应接口](https://github.com/ArcherGrey/study/blob/master/JavaScript/HPjavascript/HPjavascript6.md)
 - [ajax和xml](https://github.com/ArcherGrey/study/blob/master/JavaScript/HPjavascript/HPjavascript7.md)
 - [编程实践](https://github.com/ArcherGrey/study/blob/master/JavaScript/HPjavascript/HPjavascript8.md)
+- [创建并部署高性能JavaScript 应用程序](https://github.com/ArcherGrey/study/blob/master/JavaScript/HPjavascript/HPjavascript9.md)
