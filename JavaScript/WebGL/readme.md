@@ -1,3 +1,3 @@
 # WebGL
 
-[three.js 官方文档翻译](https://github.com/ArcherGrey/study/tree/master/JavaScript/WebGL/threejs/doc)
+[three.js 入门文档](https://github.com/ArcherGrey/study/tree/master/JavaScript/WebGL/threejs/doc)
