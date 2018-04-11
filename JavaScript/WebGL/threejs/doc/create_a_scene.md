@@ -45,3 +45,34 @@ document.body.appendChild( renderer.domElement );
 
 如果你想保持你的应用程序的大小，但以较低的分辨率渲染它，你可以通过以false作为updateStyle（第三个参数）调用setSize来实现。 例如，setSize（window.innerWidth / 2，window.innerHeight / 2，false）将以半分辨率呈现您的应用，因为您的<canvas>具有100％的宽度和高度
 
+最后，我们将renderer元素添加到我们的HTML文档中。 这是渲染器用来显示场景的<canvas>元素。
+
+接下来来添加立方体：
+```
+var geometry = new THREE.BoxGeometry( 1, 1, 1 ); // 立方体的点和面
+var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } ); // 上色
+var cube = new THREE.Mesh( geometry, material ); // 存放立方体
+scene.add( cube );
+
+camera.position.z = 5;
+```
+
+## 开始渲染
+
+上面虽然添加了立方体，但是还没有在场景上进行渲染，所以还是什么都看不到，现在我们通过调用动画循环来渲染:
+```
+function animate() {
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+}
+animate();
+```
+
+## 让立方体动起来
+
+在 `renderer.render ` 调用之前加入：
+```
+cube.rotation.x += 0.1;
+cube.rotation.y += 0.1;
+```
+每一帧都会执行一次（一般一秒60帧）
