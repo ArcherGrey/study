@@ -12,10 +12,17 @@
 - Supported Formats and Loaders（支持的格式和加载器）
 
 ## AnimationAction
-这个模块用来调度 `Animation Clips`
+用来调度 `Animation Clips`
 
 ### 构造函数
 `AnimationAction( mixer : AnimationMixer, clip : AnimationClip, localRoot : Object3D )`
 - mixer - 控制动画的剪辑器.
 - clip - 动画片段.
 - localRoot - 执行操作的对象.
+
+注意：不要直接调用此构造函数，而应该使用AnimationMixer.clipAction实例化AnimationAction，因为此方法提供缓存以获得更好的性能。
+
+### 属性
+> clampWhenFinished : Boolean
+如果clampWhenFinished设置为true，则动画将在其最后一帧自动暂停。如果clampWhenFinished设置为false，则当动作的最后一个循环结束时，启用将自动切换为false，以便此操作不会产生进一步的影响。默认为false。
+注意：如果动作被中断，则clampWhenFinished没有影响（只有在最后一个循环已经完成时才有效果
