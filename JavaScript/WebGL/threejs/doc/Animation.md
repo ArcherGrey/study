@@ -16,6 +16,6 @@
 
 ### 构造函数
 `AnimationAction( mixer : AnimationMixer, clip : AnimationClip, localRoot : Object3D )`
-mixer - 控制动画的剪辑器.
-clip - 动画片段.
-localRoot - 执行操作的对象.
+- mixer - 控制动画的剪辑器.
+- clip - 动画片段.
+- localRoot - 执行操作的对象.
