@@ -24,5 +24,8 @@
 
 ### 属性
 > clampWhenFinished : Boolean
+
 如果clampWhenFinished设置为true，则动画将在其最后一帧自动暂停。如果clampWhenFinished设置为false，则当动作的最后一个循环结束时，启用将自动切换为false，以便此操作不会产生进一步的影响。默认为false。
 注意：如果动作被中断，则clampWhenFinished没有影响（只有在最后一个循环已经完成时才有效果
+
+---
