@@ -60,6 +60,46 @@ THREE.LoopPingPong - 以选定的重复次数播放剪辑，交替播放前进�
 
 该值被钳位或封装为0 ... clip.duration（根据循环状态）。 它可以通过改变timeScale（使用setEffectiveTimeScale或setDuration）相对缩放到全局混音器时间。
 
-> 
+> timeScale : Number
+
+时间缩放因子。 值为0会导致动画暂停。 负值会导致动画向后播放。 缺省值是1。
+
+有关timeScale（分别为time）的属性/方法为：getEffectiveTimeScale，halt，paused，setDuration，setEffectiveTimeScale，stopWarping，syncWith，warp。
+
+> weight : Number
+
+这个动作的影响程度（在区间[0，1]）。 介于0（无影响）和1（全影响）之间的值可以用于在多个动作之间进行混合。 缺省值是1。
+
+有关weight的属性/方法有：crossFadeFrom，crossFadeTo，enabled，fadeIn，fadeOut，getEffectiveWeight，setEffectiveWeight，stopFading。
+
+> zeroSlopeAtEnd : Boolean
+
+无需单独剪辑即可启动，循环和结束平滑插值。 默认值是true。
+
+> zeroSlopeAtStart : Boolean
+
+无需单独剪辑即可启动，循环和结束平滑插值。 默认值是true。
 
 ---
+
+### 方法
+
+> crossFadeFrom ( fadeOutAction : AnimationAction, durationInSeconds : Number, warpBoolean : Boolean ) : AnimationAction
+
+导致此操作淡入，在传递的时间间隔内同时淡出另一个操作。 这种方法可以被链接。
+
+如果warpBoolean为true，则将应用附加的变形（时间尺度的逐渐变化）。
+
+注意：与fadeIn / fadeOut一样，淡入开始/结束的权重为1。
+
+> crossFadeTo ( fadeInAction : AnimationAction, durationInSeconds : Number, warpBoolean : Boolean ) : AnimationAction
+
+导致此操作淡出，同时在传递的时间间隔内淡入另一个操作。 这种方法可以被链接。
+
+如果warpBoolean为true，则将应用附加的变形（时间尺度的逐渐变化）。
+
+注意：与fadeIn / fadeOut一样，淡入开始/结束的权重为1。
+
+> fadeIn ( durationInSeconds : Number ) : AnimationAction
+
+在传递的时间间隔内，将此操作的权重从0逐渐增加到1。 这种方法可以被链接。
