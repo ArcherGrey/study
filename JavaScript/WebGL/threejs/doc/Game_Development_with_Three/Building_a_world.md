@@ -91,8 +91,9 @@ render();
 var scene = new THREE.Scene();
 
 // 然后创建摄像机
-var camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
-camera.position.set(-45 *Math.PI/180,400,400);
+var camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,1,10000);
+camera.position.set(0,400,400);
+camera.rotation.x = -45 *Math.PI/180;
 
 // 再创建渲染器
 var renderer = new THREE.WebGLRenderer();
@@ -115,11 +116,11 @@ for(var i=0; i<300 ;++i){
   scene.add(building);
 }
 
-// 创建河流
-var river = new THREE.PlaneGeometry(2000,2000,20,20);
+// 创建地板
+var floor = new THREE.PlaneGeometry(2000,2000,20,20);
 
 var mat = new THREE.MeshBasicMaterial({color:0x9db3b5});
-var mesh = new THREE.Mesh(river,mat);
+var mesh = new THREE.Mesh(floor,mat);
 mesh.rotation.x = -90 * Math.PI/180;
 scene.add(mesh);
 
