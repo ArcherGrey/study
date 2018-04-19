@@ -98,12 +98,13 @@ camera.rotation.x = -45 *Math.PI/180;
 // 再创建渲染器
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth,window.innerHeight);
+renderer.setClearColor(0xd7f0f7);
 document.body.appendChild(renderer.domElement);
 
 // 创建一栋楼
 var geo = new THREE.CubeGeometry(1,1,1);
 geo.applyMatrix(new THREE.Matrix4().makeTranslation(0,0.5,0));
-var material = new THREE.MeshDepthMaterial();
+var material = new THREE.MeshLambertMaterial({color:0xDEDEDE});
 
 // 创建楼群
 for(var i=0; i<300 ;++i){
@@ -112,9 +113,14 @@ for(var i=0; i<300 ;++i){
   building.position.z = Math.floor(Math.random()*200-100)*4;
   building.scale.x = Math.random() * 50 + 10;
   building.scale.y = Math.random() * building.scale.x * 8 + 8;
-  building.scale.x = building.scale.x;
+  building.scale.z = building.scale.x;
   scene.add(building);
 }
+
+// 创建光源
+var light = new THREE.PointLight( 0xF2F2F2);
+light.position.set( 0, 100, 500 );
+scene.add( light );
 
 // 创建地板
 var floor = new THREE.PlaneGeometry(2000,2000,20,20);
