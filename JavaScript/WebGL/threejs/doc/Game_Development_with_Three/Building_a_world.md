@@ -157,4 +157,80 @@ render();
 
 ## 阴影
 
+只有特殊的光源可以产生阴影，显示阴影需要打开设置：
+```
+renderer.shadowMapEnabled = true;
+```
 
+## 总结
+
+下面是有雾和阴影效果的城市完成版代码：
+```
+// 先创建场景
+var scene = new THREE.Scene();
+
+// 然后创建摄像机
+var camera = new THREE.PerspectiveCamera(65,window.innerWidth/window.innerHeight,1,10000);
+camera.position.y=400
+camera.position.z=400
+camera.rotation.x = -45 *Math.PI/180;
+
+// 再创建渲染器
+var renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
+renderer.setClearColor(0xd7f0f7);
+document.body.appendChild(renderer.domElement);
+
+// 创建一栋楼
+var geo = new THREE.BoxGeometry(1,1,1);
+geo.applyMatrix(new THREE.Matrix4().makeTranslation(0,0.5,0));
+var material = new THREE.MeshPhongMaterial({color:0xcccccc});
+
+// 创建楼群
+for(var i=0; i<90 ;++i){
+  var building = new THREE.Mesh(geo.clone(),material.clone());
+  building.position.x = Math.floor(Math.random()*200-100)*4;  
+  building.position.z = Math.floor(Math.random()*200-100)*4;
+  building.scale.x = Math.random() * 50 + 10;
+  building.scale.y = Math.random() * building.scale.x * 5 + 8;
+  building.scale.z = building.scale.x;
+  building.receiveShadow=true;
+  building.castShadow=true;
+  scene.add(building);
+}
+
+// 创建光源
+var light = new THREE.DirectionalLight( 0xf6e86d,1);
+light.position.set( 500, 1500, 1000 );
+// 设置阴影
+light.castShadow=true;
+light.shadowDarkness=0.5;
+light.shadow.mapSize.width = 2048;  // default
+light.shadow.mapSize.height = 2048; // default
+
+light.shadow.camera.far = 2500;  
+light.shadowCameraVisible=true;
+light.shadowCameraLeft=-1000
+light.shadowCameraRight=1000
+light.shadowCameraTop=1000
+light.shadowCameraBottom=-1000
+scene.add( light );
+// 添加雾
+scene.fog=new THREE.Fog(0x9db3b5,0,800)
+// 创建地板
+var floor = new THREE.PlaneGeometry(2000,2000,20,20);
+floor.receiveShadow=true;
+var mat = new THREE.MeshBasicMaterial({color:0x9db3b5});
+var mesh = new THREE.Mesh(floor,mat);
+mesh.rotation.x = -90 * Math.PI/180;
+scene.add(mesh);
+
+// 创建动画，循环渲染
+document.body.style.backgroundColor = '#d7f0f7';
+var render = function(){
+  requestAnimationFrame(render);
+  renderer.shadowMapEnabled = true;
+  renderer.render(scene,camera);
+}
+render();
+```
