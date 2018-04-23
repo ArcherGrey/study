@@ -17,8 +17,8 @@
 
 [WebGL](https://github.com/ArcherGrey/study/tree/master/JavaScript/WebGL)
 
-##　笔记 
-- [javascript DOM　编程艺术]()
+## 笔记 
+- [javascript DOM　编程艺术](https://github.com/ArcherGrey/study/blob/master/JavaScript/notes/javascript_dom.md)
 
 ## JavaScript 权威指南
 
