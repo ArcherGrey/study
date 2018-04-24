@@ -1,6 +1,6 @@
 
 # 目录
-[前端合集](https://github.com/ArcherGrey/study/tree/master/JavaScript/frontend)
+[前端知识点](https://github.com/ArcherGrey/study/tree/master/JavaScript/frontend)
 
 [资源导航](https://cnodejs.org/getstart)
 
