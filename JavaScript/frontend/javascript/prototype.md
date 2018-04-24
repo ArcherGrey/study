@@ -14,4 +14,6 @@ var b = function (){} // b 是一个函数
 console.log(b.prototype) // 不是undefined ，应该是b 可以看作构造函数
 ```
 
-
+注意：
+- `prototype` 只是一个属性用来定义需要被继承的成员属性和方法，并不指向原型对象
+- `__proto__`指向原型对象
