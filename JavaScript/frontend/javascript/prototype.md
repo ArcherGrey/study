@@ -11,4 +11,10 @@ console.log(b.prototype) // 不是undefined ，应该是b 可以看作构造函�
 ```
 ## `prototype` 和 `__proto__`
 
+- 几乎所有函数都有 `prototype` 属性，这个属性就是一个指针，指向一个对象~~原型对象？~~，对象包含所有实例共享的属性和方法
+- 每个对象~~非基础类型~~都具有 `__proto__` ，也可以称为隐式原型，也是一个指针，指向构造对象的构造函数的原型:
+```
+var a={} // a 是一个 Object 实例
+console.log(a.__proto__ == Object.prototype) // a 的 __proto__ 指向 a 的构造函数的原型对象，a 是由 Object 构造的，Object.prototype 是Object的原型对象，所以两者相等
+```
 
