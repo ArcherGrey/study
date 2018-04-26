@@ -82,6 +82,8 @@ console.log(p.m()); // 5
 
 ## 使用不同的方法创建和生成原型链
 
+`a ---> b` 也就是 `a.__proto__ == b`
+
 > 语法结构创建的对象
 
 ```
@@ -93,7 +95,7 @@ var o = {a: 1};
 // 因此 o 继承了 Object.prototype 的 hasOwnProperty
 // Object.prototype 的原型为 null
 // 原型链如下:
-// o ---> Object.prototype ---> null
+// o ---> Object.prototype ---> null 
 
 var a = ["yo", "whadup", "?"];
 
@@ -111,3 +113,79 @@ function f(){
 // 原型链如下:
 // f ---> Function.prototype ---> Object.prototype ---> null
 ```
+
+> 构造器创建的对象
+
+```
+function Graph() {
+  this.vertices = [];
+  this.edges = [];
+}
+
+Graph.prototype = {
+  addVertex: function(v){
+    this.vertices.push(v);
+  }
+};
+
+var g = new Graph();
+// g是生成的对象,他的自身属性有'vertices'和'edges'.
+// 在g被实例化时,g.[[Prototype]]指向了Graph.prototype.
+```
+
+> `Object.create` 创建的对象 (ES5)
+
+```
+var a = {a: 1}; 
+// a ---> Object.prototype ---> null
+
+var b = Object.create(a);
+// b ---> a ---> Object.prototype ---> null
+console.log(b.a); // 1 (继承而来)
+
+var c = Object.create(b);
+// c ---> b ---> a ---> Object.prototype ---> null
+
+var d = Object.create(null);
+// d ---> null
+console.log(d.hasOwnProperty); // undefined, 因为d没有继承Object.prototype
+```
+
+> `class` 关键字创建对象 (ES6)
+
+```
+"use strict";
+
+class Polygon {
+  constructor(height, width) {
+    this.height = height;
+    this.width = width;
+  }
+}
+
+class Square extends Polygon {
+  constructor(sideLength) {
+    super(sideLength, sideLength);
+  }
+  get area() {
+    return this.height * this.width;
+  }
+  set sideLength(newLength) {
+    this.height = newLength;
+    this.width = newLength;
+  }
+}
+
+var square = new Square(2);
+
+// square ---> Square.prototype 
+```
+
+## 性能
+在原型链上查找属性比较耗时，对性能有副作用，这在性能要求苛刻的情况下很重要。另外，试图访问不存在的属性时会遍历整个原型链。
+
+遍历对象的属性时，原型链上的每个可枚举属性都会被枚举出来。要检查对象是否具有自己定义的属性，而不是其原型链上的某个属性，则必须使用所有对象从`Object.prototype` 继承的 `hasOwnProperty` 方法。
+
+`hasOwnProperty` 是 `JavaScript` 中唯一处理属性并且不会遍历原型链的方法。
+
+注意：检查属性是否 `undefined` 还不够。该属性可能存在，但其值恰好设置为 `undefined`。
