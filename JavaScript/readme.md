@@ -17,6 +17,7 @@
 [javascript 特殊技巧](https://github.com/ArcherGrey/study/blob/master/JavaScript/spec_tech.md)
 
 [WebGL](https://github.com/ArcherGrey/study/tree/master/JavaScript/WebGL)
+[jQuery](https://github.com/ArcherGrey/study/tree/master/JavaScript/jQuery)
 
 ## 笔记 
 - [javascript DOM　编程艺术](https://github.com/ArcherGrey/study/blob/master/JavaScript/notes/javascript_dom.md)
