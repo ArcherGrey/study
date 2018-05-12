@@ -5,6 +5,8 @@
     - [返回实例](#返回实例)
     - [分隔作用域](#分隔作用域)
     - [跨域访问](#跨域访问)
+    - [选择器](#选择器)
+    - [迭代器](#迭代器)
 
 # 框架设计概述
 ## 设计目标
@@ -133,3 +135,103 @@ console.log($().length); // 返回1
 console.log($(0).test()); // 返回0
 console.log($(2).length); // 返回2
 ```
+
+## 选择器
+
+`jQuery` 返回的是 `jQuery` 对象，是一个类数组的对象，也就是说它拥有数组的长度和下标，但是没有继承数组的方法。
+
+`jQuery()` 函数包含两个参数 `selector` 和 `context` ，其中 `selector` 表示选择器，`context` 表示选择的内容范围，表示一个 `DOM` 元素：
+```
+var $ = jQuery = function(selector,context){
+  return new jQuery.fn.init(selector,context); // 返回选择器实例
+}
+jQuery.fn = jQuery.prototype = {
+  init: function(selector,context){
+    selector = selector || document; // 默认为 document
+    context = context || document; // 默认为 document
+    if(selector.nodeType){ // 如果选择符为节点对象
+      this[0] = selector; // 把参数节点传递给实例对象的数组
+      this.length = 1;
+      this.context = selector; // 设置实例的属性，返回选择范围
+      return this;
+    }
+    if(typeof selector === 'string'){ // 如果选择符是字符串
+      var e = context.getElementsByTagName(selector); // 获取指定名称的元素
+      for(var i=0; i<e.length; i++){
+        // 遍历元素集合，把所有元素填入到当前实例数组中
+        this[i] = e[i];
+      }
+      this.length = e.length; // 设置实例的length属性，即定义包含的元素个数
+      this.context = context; // 设置实例的属性，返回选择范围
+      return this; // 返回当前实例
+    }
+    else{
+      this.length = 0; // 就是没有选中的状态
+      this.context = context; // 没有选中的时候属性就是 document
+      return this;
+    }
+  },
+  jQuery:1,
+  size: function(){
+    // 返回jQuery对象集合的长度
+    return this.length;
+  }
+}
+jQuery.fn.init.prototype = jQuery.fn;
+```
+
+## 迭代器
+
+`jQuery` 对象有很多身份：
+- 是一个数据集合，不是一个个体对象，无法直接使用 `javascript` 方法来操作
+- 通过 `new` 创建的一个实例对象，和普通的对象一样，可以继承原型方法或属性，也拥有 `Object` 类型的方法和属性
+- 包含数组特性，以数组结构存储返回的数据，是数组和对象的混合体，拥有数组结构但是没有数组方法，也就是说不是`Array` 类型，而是`Object` 类型:
+
+```
+var jquery = { // 定义对象直接量
+  // 以属性方式存储信息
+  name: "jQuery",
+  value: 1
+};
+jquery[0] = "jQuery"; // 以数组方式存储信息
+jquery[1] = 1;
+```
+- 对象包含的数据都是 `DOM` 元素，通过数组形式存储，通过类似数组下标`jQuery[n]` 的方式获取，还拥有类似数组长度的属性`length`，所以不能直接操作对象，只有分别读取包含的每一个`DOM`元素，才能实现各种操作
+
+操作对象中`DOM` 元素的形式：
+```
+$('div').html();
+```
+
+> 具体实现
+
+`jQuery` 定义了一个工具函数 `each()` ，利用这个工具就可以遍历对象中所有的`DOM`元素，并把需要操作的内容封装到一个回调函数中，然后通过在每个`DOM`元素上调用这个回调函数即可：
+```
+var $ = jQuery = function(selector,context){
+  return new jQuery.fn.init(selector,context);
+}
+jQuery.fn = jQuery.prototype = {
+  init: function(selector,context){
+    // 省略。。和上面的一样
+  },
+  // 定义对象方法
+  html: function(val){
+    // 模仿jQuery中的html()方法，为匹配的每个DOM元素插入html代码
+    jQuery.each(this,function(val){
+      // 调用each工具函数为每个DOM元素执行回调函数
+      this.innerHTML = val;
+      },val)
+  }
+}
+jQuery.fn.init.prototype = jQuery.fn;
+
+// 扩展工具函数
+jQuery.each = function(object,callback,args){
+  for(var i=0; i<object.length; i++){
+    callback.call(object[i],args);
+  }
+  return object;
+}
+$("div").html("测试代码");
+```
+上面的代码，通过先给`jQuery`对象绑定`html()`方法，然后利用选择器获取所有div元素，在
