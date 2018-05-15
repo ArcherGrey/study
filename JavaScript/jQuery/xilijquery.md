@@ -7,6 +7,10 @@
     - [跨域访问](#跨域访问)
     - [选择器](#选择器)
     - [迭代器](#迭代器)
+    - [功能扩展](#功能扩展)
+    - [参数处理](#参数处理)
+    - [名字空间](#名字空间)
+- [深入了解选择器](#深入了解选择器)
 
 # 框架设计概述
 ## 设计目标
@@ -234,4 +238,94 @@ jQuery.each = function(object,callback,args){
 }
 $("div").html("测试代码");
 ```
-上面的代码，通过先给`jQuery`对象绑定`html()`方法，然后利用选择器获取所有div元素，在
+上面的代码，通过先给`jQuery`对象绑定`html()`方法，然后利用选择器获取所有div元素，再调用`html()`方法为所有匹配的元素插入源码。
+
+## 功能扩展
+
+根据一般设计习惯，如果要给某个类添加函数或者方法，可以直接通过点语法实现。但是`jQuery`中是通过`extend()`函数来实现功能扩展的。
+
+`extend()`函数能够方便用户快速扩展框架功能，但是不会破坏框架的原型结构，从而避免后期人工添加工具函数或者方法时破坏框架的单纯性，同时也方便管理。如果不需要某个插件，只需要简单地删除即可，而不需要在框架源代码中去筛选和删除。
+
+`extend()`函数的功能实现起来也很简单，只是把指定对象的方法复制给`jQuery`对象或者`jQuery`原型对象：
+```
+var $ = jQuery = function(selector,context){
+  return new jQuery.fn.init(selector,context);
+}
+jQuery.fn = jQuery.prototype = {
+  init: function(selector,context){}
+}
+jQuery.fn.init.prototype = jQuery.fn;
+
+// 扩展功能函数
+jQuery.extend = jQuery.fn.extend = function(obj){
+  for(var prop in obj){
+    this[prop] = obj[prop];
+  }
+  return this;
+}
+
+// 扩展对象方法
+jQuery.fn.extend({
+  test: function(){
+    console.log('测试扩展');
+  }
+})
+
+// 测试代码
+$('div').test();
+```
+
+## 参数处理
+
+很多时候`jQuery`的方法都要求传递的参数为对象结构，使用对象直接量作为参数进行传递，方便参数管理。当方法或者函数的参数长度不固定时，使用对象直接量作为参数有很多优势。
+
+使用对象直接量作为参数传递的载体，这里就涉及参数处理问题，解析并提取相应的参数：
+```
+var $ = jQuery = function(selector,context){
+  return new jQuery.fn.init(selector,context);
+}
+jQuery.fn = jQuery.prototype = {
+  init: function(selector,context){},
+  setOptions: function(options){
+    this.options = {
+      // 方法的默认值，可以扩展
+      a: 1,
+      b: 2
+    };
+    jQuery.extend(this.options,options||{}); // 如果传递参数，就覆盖默认参数
+  }
+}
+jQuery.fn.init.prototype = jQuery.fn;
+jQuery.extend = jQuery.fn.extend = function(destination,source){
+  // 重新定义
+  for(var prop in source){
+    destin[prop] = source[prop];
+  }
+  return destination;
+}
+```
+
+上面的代码，定义了一个原型方法`setOptions`，该方法可以对传递的参数对象进行处理，并覆盖默认值。
+
+`jQuery`框架中，`extend`既可以扩展方法，也可以处理参数对象，并覆盖默认值。
+
+## 名字空间
+
+到这里基本上已经有了框架的雏形，现在需要处理的问题就是名字空间冲突问题。
+
+当一个页面中存在多个框架，或者代码量很大的时候，很难确保不会出现命名冲突，或者功能覆盖。为了解决这个问题，我们必须把框架封装在一个孤立的环境中，避免其他代码的干扰。
+
+如果我们希望通过类似`$.method()`的方式来调用，就需要将`jQuery`设置为`window`对象的一个属性：
+```
+var jQuery = window.jQuery = window.$ = function(selector,context){
+  return new jQuery.fn.init(selector,context);
+}
+```
+
+`jQuery`框架希望和其他任何代码完全隔离开来，不暴露内部信息，也不允许其他代码随意访问，使用匿名函数就是一种最好的封闭方式。
+
+到这里，框架的设计模式就初见端倪了，后面的工作就是根据应用需要或者功能需要进行扩展了。
+
+# 深入了解选择器
+
+`jQuery` 选择器功能强大，而且用法简单，它只提供了一个接口`jQuery()`或者简写`$()`。这一章我们深入分析选择器的设计思路、实现过程、工作原理。
